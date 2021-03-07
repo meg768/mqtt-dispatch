@@ -1,7 +1,7 @@
 # mqtt-dispatch
-mqtt-dispatch
+A super simple dispatcher for MQTT messages.
 
-## Super simple dispatch for MQTT
+## Source code
 
 ´´´javascript
 
