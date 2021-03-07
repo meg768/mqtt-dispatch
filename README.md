@@ -4,6 +4,7 @@ mqtt-dispatch
 ## Super simple dispatch for MQTT
 
 ´´´javascript
+
 var Events = require("events");
 
 class MqttDispatch extends Events {
