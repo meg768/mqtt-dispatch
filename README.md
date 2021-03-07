@@ -5,6 +5,8 @@ A super simple dispatcher for MQTT messages.
 
 ```javascript
 
+var Events = require("events");
+
 class MqttDispatch extends Events {
 
 	constructor(mqtt) {
@@ -55,5 +57,6 @@ class MqttDispatch extends Events {
 		super.on(topic, fn);
 	}
 }
+
 
 ```
