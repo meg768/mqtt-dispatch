@@ -54,7 +54,6 @@ class MqttDispatch extends Events {
 		this.topics.push(topic);
 		super.on(topic, fn);
 	}
-}
+}X
 
-
-´´´
+```
