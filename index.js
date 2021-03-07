@@ -8,23 +8,23 @@ class MqttDispatch extends Events {
 
 		this.topics = [];
 
-		function isMatch(topicA, topicB) {
+		function isMatch(A, B) {
 			var args = {};
 
-			var pathA = topicA.split('/');
-			var pathB = topicB.split('/');
+			var A = A.split('/');
+			var B = B.split('/');
 		
-			if (pathA.length != pathB.length)
+			if (A.length != B.length)
 				return null;
 		
-			for (let i = 0; i < pathA.length; i++) {
-				if (pathA[i] != pathB[i]) {
-					let match = pathB[i].match(/^:([a-zA-Z0-9]+)$/);
+			for (let i = 0; i < A.length; i++) {
+				if (A[i] != B[i]) {
+					let match = B[i].match(/^:([a-zA-Z0-9]+)$/);
 		
 					if (!match)
 						return null;
 		
-					args[match[1]] = pathA[i];
+					args[match[1]] = A[i];
 				}
 			}
 
