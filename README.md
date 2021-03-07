@@ -3,7 +3,7 @@ A super simple dispatcher for MQTT messages.
 
 ## Source code
 
-´´´
+```javascript
 
 class MqttDispatch extends Events {
 
