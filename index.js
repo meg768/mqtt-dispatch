@@ -1,57 +1,58 @@
-
-var MQTT = require('mqtt');
+const Mqtt = require('mqtt');
 
 function connect(host, options) {
 
-	var mqtt = MQTT.connect(host, options);
-	var callbacks = {};
+	var client = Mqtt.connect(host, options);
+	var topics = [];
 
-	function isMatch(A, B) {
-		var args = {};
-
-		var A = A.split('/');
-		var B = B.split('/');
-
-		if (A.length != B.length)
-			return null;
-
-		for (let i = 0; i < A.length; i++) {
-			if (A[i] != B[i]) {
-				let match = B[i].match(/^:([a-zA-Z0-9]+)$/);
-
-				if (!match)
-					return null;
-
-				args[match[1]] = A[i];
+	client.addListener('message', (topic, message) => {
+	
+		function isMatch(A, B) {
+			var args = {};
+	
+			var A = A.split('/');
+			var B = B.split('/');
+	
+			if (A.length != B.length)
+				return null;
+	
+			for (let i = 0; i < A.length; i++) {
+				if (A[i] != B[i]) {
+					let match = B[i].match(/^:([a-zA-Z0-9]+)$/);
+	
+					if (!match)
+						return null;
+	
+					args[match[1]] = A[i];
+				}
 			}
+	
+			return args;
 		}
 
-		return args;
-	}
-
-	mqtt.on('message', (topic, message) => {
-	
 		message = message.toString();
 
-		for (const [item, fn] of Object.entries(callbacks)) {
+		topics.forEach((item) => {
 			let match = isMatch(topic, item);
 
 			if (match) {
-				fn(message, match);
+				client.emit(item, message, match);
 			}
-		  
-		}
+
+		});
+
 	});
 
-	mqtt.dispatch = function(topic, fn) {
-		callbacks[topic] = fn;
+	client.on = function(topic, fn) {
+		topics.push(topic);
+		client.addListener(topic, fn);
 	}
 
-	return mqtt;
+	return client;
 }
 
 module.exports.connect = connect
-module.exports.MqttClient = MQTT.MqttClient
-module.exports.Client = MQTT.MqttClient
-module.exports.Store = MQTT.Store
+module.exports.MqttClient = Mqtt.MqttClient
+module.exports.Client = Mqtt.MqttClient
+module.exports.Store = Mqtt.Store
 
