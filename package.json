@@ -1,6 +1,6 @@
 {
   "name": "mqtt-dispatch",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "mqtt-dispatch",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/meg768/mqtt-dispatch/issues"
   },
-  "homepage": "https://github.com/meg768/mqtt-dispatch#readme"
+  "homepage": "https://github.com/meg768/mqtt-dispatch#readme",
+  "dependencies": {
+    "mqtt": "^4.2.6"
+  }
 }
