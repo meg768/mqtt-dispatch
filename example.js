@@ -31,7 +31,7 @@ function example() {
 	// Subscribe to the topics you want
 	client.subscribe('example/#');
 
-	// Example just to show how to use parameters
+	// Listen to specific topics
 	client.on('example/topic/foo/bar', (message) => {
 		console.log(`example/topic/foo/bar: ${JSON.stringify(message)}`);
 	});
