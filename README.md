@@ -13,7 +13,7 @@ See example below.
 
 function example() {
 	let Mqtt = require('mqtt');
-	let MqttDispatch = require('./mqtt-dispatch');
+	let MqttDispatch = require('mqtt-dispatch');
 
 	// Connect to mosquittos test server
 	let options = {
