@@ -2,7 +2,7 @@
 
 function example() {
 	let Mqtt = require('mqtt');
-	let MqttDispatch = require('./mqtt-dispatch.js');
+	let MqttDispatch = require('mqtt-dispatch');
 
 	// Connect to mosquittos test server
 	let options = {
