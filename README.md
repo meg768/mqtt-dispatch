@@ -1,7 +1,11 @@
 # mqtt-dispatch
 This is a dispatcher for MQTT.js [https://www.npmjs.com/package/mqtt] which
-supports message routing for specific topics. See example below.
+supports message routing for specific topics. 
 
+You no longer need to parse the topic in the 'message' event from MQTT.js.
+This module makes it easy to listen to specific events in your MQTT tree of events.
+
+See example below
 
 ## Example
 

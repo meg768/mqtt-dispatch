@@ -1,18 +1,13 @@
 #!/usr/bin/env node
 
 function example() {
-	var Mqtt = require('mqtt');
-	var MqttDispatch = require('./mqtt-dispatch.js');
+	let Mqtt = require('mqtt');
+	let MqttDispatch = require('./mqtt-dispatch.js');
 
-	// Load .env
-	require('dotenv').config();
-
-	// Enter your MQTT broker´s credentials here
+	// Connect to mosquittos test server
 	let options = {
-		host     : process.env.MQTT_HOST,
-		username : process.env.MQTT_USERNAME,
-		password : process.env.MQTT_PASSWORD,
-		port     : process.env.MQTT_PORT
+		host:"mqtt://test.mosquitto.org",
+		port:1883
 	};
 
 	console.log(`Connecting to MQTT broker ${options.host}...`);
@@ -28,19 +23,27 @@ function example() {
 		console.log(`Connected to MQTT broker ${options.host} on port ${options.port}.`);
 	});
 	
-	// Subscribe to the topics you want
-	client.subscribe('example/#');
+	// Subscribe to the topic "Example"
+	client.subscribe('Example/#');
 
 	// Listen to specific topics
-	client.on('example/topic/foo/bar', (message) => {
-		console.log(`example/topic/foo/bar: ${JSON.stringify(message)}`);
-	});
-	
-	// Example just to show how to use parameters
-	client.on('example/topic/:A/:B', (message, args) => {
-		console.log(`example/topic/${args.A}/${args.B}: ${JSON.stringify(message)}`);
+	client.on('Example/A', (message) => {
+		console.log(`Message A is ${JSON.stringify(message)}`);
 	});
 
+	client.on('Example/B', (message) => {
+		console.log(`Message B is ${JSON.stringify(message)}`);
+	});
+	
+	// Listen to topics using paramaters
+	client.on('Example/:name/:value', (message, args) => {
+		console.log(`Message ${args.name}/${args.value} is ${JSON.stringify(message)}`);
+	});
+	
+	// Publish 
+	client.publish('Example/A', 'AA');
+	client.publish('Example/B', 'BB');
+	client.publish('Example/A/B', 'AABB');
 }
 
 example();
