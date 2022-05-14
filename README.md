@@ -26,7 +26,7 @@ function example() {
 	let client = Mqtt.connect(options.host, options);
 
 	// Modify MQTT client to dispatch messages
-	MqttDispatch(client);
+	client = MqttDispatch(client);
 
 	// Subscribe to the topic "Example"
 	client.subscribe('Example/#');
