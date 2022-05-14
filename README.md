@@ -5,14 +5,15 @@ supports message routing for specific topics.
 You no longer need to parse the topic in the 'message' event from MQTT.js.
 This module makes it easy to listen to specific events in your MQTT tree of events.
 
-See example below
+See example below.
 
 ## Example
 
 ```javascript
+
 function example() {
-	var Mqtt = require('mqtt');
-	var MqttDispatch = require('./mqtt-dispatch.js');
+	let Mqtt = require('mqtt');
+	let MqttDispatch = require('./mqtt-dispatch');
 
 	// Connect to mosquittos test server
 	let options = {
@@ -28,6 +29,11 @@ function example() {
 	// Modify MQTT client to dispatch messages
 	client = MqttDispatch(client);
 
+	// Notify when connected
+	client.on('connect', () => {
+		console.log(`Connected to MQTT broker ${options.host} on port ${options.port}.`);
+	});
+	
 	// Subscribe to the topic "Example"
 	client.subscribe('Example/#');
 
