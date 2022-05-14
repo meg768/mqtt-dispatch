@@ -1,9 +1,8 @@
-const Mqtt = require('mqtt');
 
-function connect(host, options) {
 
-	var client = Mqtt.connect(host, options);
-	var topics = [];
+module.exports = function(client) {
+
+	let topics = [];
 
 	client.addListener('message', (topic, message) => {
 	
@@ -38,7 +37,6 @@ function connect(host, options) {
 			if (match) {
 				client.emit(item, message, match);
 			}
-
 		});
 
 	});
@@ -51,8 +49,4 @@ function connect(host, options) {
 	return client;
 }
 
-module.exports.connect = connect
-module.exports.MqttClient = Mqtt.MqttClient
-module.exports.Client = Mqtt.MqttClient
-module.exports.Store = Mqtt.Store
 

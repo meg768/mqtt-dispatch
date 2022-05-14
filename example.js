@@ -1,13 +1,14 @@
+#!/usr/bin/env node
 
 function example() {
-//	var Mqtt = require('mqtt-dispatch');
-	var Mqtt = require('./index.js');
+	var Mqtt = require('mqtt');
+	var MqttDispatch = require('./mqtt-dispatch.js');
 
 	// Load .env
 	require('dotenv').config();
 
 	// Enter your MQTT broker´s credentials here
-	var options = {
+	let options = {
 		host     : process.env.MQTT_HOST,
 		username : process.env.MQTT_USERNAME,
 		password : process.env.MQTT_PASSWORD,
@@ -15,15 +16,21 @@ function example() {
 	};
 
 	console.log(`Connecting to MQTT broker ${process.env.MQTT_HOST}...`);
-	var client = Mqtt.connect(options.host, options);
-	
+
+	// Connect to MQTT broker as usual.
+	let client = Mqtt.connect(options.host, options);
+
+	// Modify MQTT client to dispatch messages
+	client = MqttDispatch(client);
+
 	// Notify when connected
 	client.on('connect', () => {
 		console.log('Connected to MQTT broker.');
 	});
 	
-	// Subscribe to the topics you want, just as you would using MQTT.js
+	// Subscribe to the topics you want
 	client.subscribe('homey/devices/#');
+	client.subscribe('example/#');
 	
 	// Perform specific tasks on each topic
 	client.on('homey/devices/:device/onoff', (message, args) => {
@@ -39,10 +46,11 @@ function example() {
 		console.log(`Device ${args.device}:${args.capability} is set to ${message}`);
 	});
 
-	// You may receive messages as usual...
-	client.on('message', (topic, message) => {
-		console.log(`Message ${message.toString()} from topic ${topic}`);
+	// Another example just to show how to use parameters
+	client.on('example/topic/:name/:foo', (message, args) => {
+		console.log(`${message} ${JSON.stringify(args)}`);
 	});
+
 }
 
 example();
