@@ -1,11 +1,5 @@
-# mqtt-dispatch
-This is a dispatcher for MQTT.js [https://www.npmjs.com/package/mqtt] which
-supports message routing for specific topics. See example below.
+#!/usr/bin/env node
 
-
-## Example
-
-```javascript
 function example() {
 	var Mqtt = require('mqtt');
 	var MqttDispatch = require('./mqtt-dispatch.js');
@@ -53,4 +47,3 @@ function example() {
 }
 
 example();
-```
