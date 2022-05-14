@@ -26,13 +26,8 @@ function example() {
 	let client = Mqtt.connect(options.host, options);
 
 	// Modify MQTT client to dispatch messages
-	client = MqttDispatch(client);
+	MqttDispatch(client);
 
-	// Notify when connected
-	client.on('connect', () => {
-		console.log(`Connected to MQTT broker ${options.host} on port ${options.port}.`);
-	});
-	
 	// Subscribe to the topic "Example"
 	client.subscribe('Example/#');
 
