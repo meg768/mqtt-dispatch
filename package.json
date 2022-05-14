@@ -1,8 +1,8 @@
 {
   "name": "mqtt-dispatch",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "mqtt-dispatch",
-  "main": "index.js",
+  "main": "mqtt-dispatch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "git-pull": "git pull",

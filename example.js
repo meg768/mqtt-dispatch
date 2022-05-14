@@ -15,7 +15,7 @@ function example() {
 		port     : process.env.MQTT_PORT
 	};
 
-	console.log(`Connecting to MQTT broker ${process.env.MQTT_HOST}...`);
+	console.log(`Connecting to MQTT broker ${options.host}...`);
 
 	// Connect to MQTT broker as usual.
 	let client = Mqtt.connect(options.host, options);
@@ -25,30 +25,20 @@ function example() {
 
 	// Notify when connected
 	client.on('connect', () => {
-		console.log('Connected to MQTT broker.');
+		console.log(`Connected to MQTT broker ${options.host} on port ${options.port}.`);
 	});
 	
 	// Subscribe to the topics you want
-	client.subscribe('homey/devices/#');
 	client.subscribe('example/#');
-	
-	// Perform specific tasks on each topic
-	client.on('homey/devices/:device/onoff', (message, args) => {
-		console.log(`Lightbulb/socket ${args.device} is set to state ${message}`);
-	});
-	
-	client.on('homey/devices/:device/alarm_motion', (message, args) => {
-		console.log(`Sensor ${args.device} is set to state ${message}`);
-	});
 
-	// Another example just to show how to use parameters
-	client.on('homey/devices/:device/:capability', (message, args) => {
-		console.log(`Device ${args.device}:${args.capability} is set to ${message}`);
+	// Example just to show how to use parameters
+	client.on('example/topic/foo/bar', (message) => {
+		console.log(`example/topic/foo/bar: ${JSON.stringify(message)}`);
 	});
-
-	// Another example just to show how to use parameters
-	client.on('example/topic/:name/:foo', (message, args) => {
-		console.log(`${message} ${JSON.stringify(args)}`);
+	
+	// Example just to show how to use parameters
+	client.on('example/topic/:A/:B', (message, args) => {
+		console.log(`example/topic/${args.A}/${args.B}: ${JSON.stringify(message)}`);
 	});
 
 }
